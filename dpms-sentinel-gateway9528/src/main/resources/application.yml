@@ -1,0 +1,91 @@
+server:
+  port: 9528
+spring:
+  application:
+    name: dpms-sentinel-gateway
+  cloud:
+    loadbalancer:
+      nacos:
+        enabled: true
+    nacos:
+      discovery:
+        server-addr: localhost:8848
+    gateway:
+      routes:
+        - id: shop-knife4j
+          uri: lb://shop-service
+          predicates:
+            - Path=/docs/shop/**
+          filters:
+            - RewritePath=/docs/shop/(?<segment>.*), /${segment}
+        - id: user-knife4j
+          uri: lb://user-service
+          predicates:
+            - Path=/docs/user/**
+          filters:
+            - RewritePath=/docs/user/(?<segment>.*), /${segment}
+        - id: voucher-knife4j
+          uri: lb://voucher-service
+          predicates:
+            - Path=/docs/voucher/**,/docs/voucher-order/**
+          filters:
+            - RewritePath=/docs/voucher/(?<segment>.*), /${segment}
+        - id: upload-knife4j
+          uri: lb://upload-service
+          predicates:
+            - Path=/docs/upload/**
+          filters:
+            - RewritePath=/docs/upload/(?<segment>.*), /${segment}
+        - id: social-knife4j
+          uri: lb://social-service
+          predicates:
+            - Path=/docs/blog/**
+          filters:
+            - RewritePath=/docs/blog/(?<segment>.*), /${segment}
+
+        - id: user-service
+          uri: lb://user-service
+          predicates:
+            - Path=/user/**
+        - id: voucher-service
+          uri: lb://voucher-service
+          predicates:
+            - Path=/voucher/**,/voucher-order/**
+        - id: shop-service
+          uri: lb://shop-service
+          predicates:
+            - Path=/shop/**,/shop-type/**
+        - id: upload-service
+          uri: lb://upload-service
+          predicates:
+            - Path=/upload/**
+        - id: blog_like
+          uri: lb://social-service
+          predicates:
+            - Path=/blog/like/**
+        - id: social-service
+          uri: lb://social-service
+          predicates:
+            - Path=/blog/**,blog-comments/**,/follow/**
+logging:
+  level:
+    com.syy.dpms: debug
+
+
+knife4j:
+  gateway:
+    # 开启网关聚合文档
+    enabled: true
+    tags-sorter: order
+    operations-sorter: order
+    # 指定服务发现的模式聚合微服务文档，并且是默认 default 分组
+    strategy: discover
+    # 服务发现
+    discover:
+      # 开启服务发现 默认:true
+      enabled: true
+      # OpenAPI 3.0 规范
+      version: openapi3
+      excluded-services:
+        - dpms-sentinel-gateway
+    routes:

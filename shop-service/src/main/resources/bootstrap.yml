@@ -1,0 +1,15 @@
+spring:
+  application:
+    name: shop-service  # 每个服务的唯一名称
+  cloud:
+    nacos:
+      discovery:
+        server-addr: localhost:8848 #Nacos服务注册中心地址
+      config:
+        import-check:
+          enabled: false
+        server-addr: localhost:8848  # Nacos 服务器地址
+        file-extension: yaml  # 配置文件的格式
+        shared-configs:
+          - data-id: common-config.yaml
+            refresh: true
