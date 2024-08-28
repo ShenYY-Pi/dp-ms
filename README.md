@@ -2,11 +2,12 @@
 
 项目使用技术：Java17、SpringBoot、Redis、SringCloud Alibaba、GateWay、Sentinel、Nacos、RabbitMQ、OpenFeign
 
-使用SpringCloud GateWay网关对所有请求统一进行管理
+**项目优化点**
 
-使用OpenFeign进行服务之间的调用
-
-秒杀业务中利用Lua脚本保证业务的原子性，配合RabbitMQ和异步执行的数据库IO操作缓解服务器压力
+1. 使用GateWay做统一请求处理，在网关层进行鉴权和一系列限制，通过设置请求头传递登录信息到各个微服务；整合Sentinel实现网关层的服务限流和降级
+2. 秒杀业务中基于Lua脚本保证判断库存是否充足、用户是否下单和扣减库存操作，保证业务的原子性；同时采用消息队列RabbitMQ异步应对高并发的情况，减轻服务器和数据库的压力
+3. 使用延迟队列兜底判断订单状态，若订单超时未支付则进行恢复库存、修改状态操作，并使用Lua脚本操作Redis中的库存数据，保证缓存和数据库的一致性
+4. 微服务之间采用OpenFeign进行通信，并配置fallbackFactory在服务异常的情况下返回降级信息
 
 **运行注意事项**
 
