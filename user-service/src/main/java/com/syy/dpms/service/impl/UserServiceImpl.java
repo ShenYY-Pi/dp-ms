@@ -4,10 +4,9 @@ import cn.hutool.core.bean.BeanUtil;
 import cn.hutool.core.bean.copier.CopyOptions;
 import cn.hutool.core.lang.UUID;
 import cn.hutool.core.util.RandomUtil;
-import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.syy.dpms.RegexUtils;
-import com.syy.dpms.UserHolder;
+import com.syy.dpms.utils.RegexUtils;
+import com.syy.dpms.utils.UserHolder;
 import com.syy.dpms.dto.LoginFormDTO;
 import com.syy.dpms.dto.Result;
 import com.syy.dpms.dto.UserDTO;
@@ -18,10 +17,8 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.BitFieldSubCommands;
 import org.springframework.data.redis.core.StringRedisTemplate;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
@@ -33,8 +30,8 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
-import static com.syy.dpms.RedisConstants.*;
-import static com.syy.dpms.SystemConstants.USER_NICK_NAME_PREFIX;
+import static com.syy.dpms.utils.RedisConstants.*;
+import static com.syy.dpms.utils.SystemConstants.USER_NICK_NAME_PREFIX;
 
 
 /**

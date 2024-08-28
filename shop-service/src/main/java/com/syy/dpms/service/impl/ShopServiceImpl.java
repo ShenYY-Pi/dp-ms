@@ -5,9 +5,9 @@ import cn.hutool.core.util.StrUtil;
 import cn.hutool.json.JSONUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.syy.dpms.CacheClient;
-import com.syy.dpms.RedisData;
-import com.syy.dpms.SystemConstants;
+import com.syy.dpms.utils.CacheClient;
+import com.syy.dpms.utils.RedisData;
+import com.syy.dpms.utils.SystemConstants;
 import com.syy.dpms.dto.Result;
 import com.syy.dpms.entity.Shop;
 import com.syy.dpms.mapper.ShopMapper;
@@ -25,7 +25,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 
-import static com.syy.dpms.RedisConstants.*;
+import static com.syy.dpms.utils.RedisConstants.*;
 
 
 /**

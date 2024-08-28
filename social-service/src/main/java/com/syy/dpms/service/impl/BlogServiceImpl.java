@@ -4,9 +4,9 @@ import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson2.JSONObject;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.syy.dpms.SystemConstants;
-import com.syy.dpms.UserHolder;
 import com.syy.dpms.apis.UserServiceFeignApi;
+import com.syy.dpms.utils.SystemConstants;
+import com.syy.dpms.utils.UserHolder;
 import com.syy.dpms.dto.Result;
 import com.syy.dpms.dto.ScrollResult;
 import com.syy.dpms.dto.UserDTO;
@@ -27,8 +27,8 @@ import java.util.List;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-import static com.syy.dpms.RedisConstants.BLOG_LIKED_KEY;
-import static com.syy.dpms.RedisConstants.FEED_KEY;
+import static com.syy.dpms.utils.RedisConstants.BLOG_LIKED_KEY;
+import static com.syy.dpms.utils.RedisConstants.FEED_KEY;
 
 /**
  * <p>
@@ -201,6 +201,7 @@ public class BlogServiceImpl extends ServiceImpl<BlogMapper, Blog> implements Bl
 
 
     private void isBlogLiked(Blog blog) {
+        // TODO 这里存在一个bug，因为首页的hotblog不需要登录也能查看，导致网关放行了此路径，所以当路径是/blog/hot/**时，无法传递用户信息，待优化
         // 1.获取登录用户
         UserDTO user = UserHolder.getUser();
         if (user == null) {

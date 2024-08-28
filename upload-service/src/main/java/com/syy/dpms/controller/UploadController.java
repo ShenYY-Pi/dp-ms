@@ -2,7 +2,7 @@ package com.syy.dpms.controller;
 
 import cn.hutool.core.io.FileUtil;
 import cn.hutool.core.util.StrUtil;
-import com.syy.dpms.SystemConstants;
+import com.syy.dpms.utils.SystemConstants;
 import com.syy.dpms.dto.Result;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;

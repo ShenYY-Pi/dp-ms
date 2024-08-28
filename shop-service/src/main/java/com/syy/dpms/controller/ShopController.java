@@ -3,7 +3,7 @@ package com.syy.dpms.controller;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.syy.dpms.SystemConstants;
+import com.syy.dpms.utils.SystemConstants;
 import com.syy.dpms.dto.Result;
 import com.syy.dpms.entity.Shop;
 import com.syy.dpms.service.ShopService;

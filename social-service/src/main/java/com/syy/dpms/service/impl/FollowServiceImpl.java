@@ -1,10 +1,9 @@
 package com.syy.dpms.service.impl;
 
 
-import cn.hutool.core.bean.BeanUtil;
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.syy.dpms.UserHolder;
+import com.syy.dpms.utils.UserHolder;
 import com.syy.dpms.apis.UserServiceFeignApi;
 import com.syy.dpms.dto.Result;
 import com.syy.dpms.dto.UserDTO;

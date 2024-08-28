@@ -14,7 +14,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static com.syy.dpms.RedisConstants.SECKILL_STOCK_KEY;
+import static com.syy.dpms.utils.RedisConstants.SECKILL_STOCK_KEY;
 
 
 /**

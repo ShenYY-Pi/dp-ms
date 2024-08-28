@@ -1,6 +1,25 @@
 server:
   port: 8083
 spring:
+  rabbitmq:
+    host: 192.168.64.128 # 你的虚拟机IP
+    port: 5672 # 端口
+    virtual-host: /hmall # 虚拟主机
+    username: syy # 用户名
+    password: 123456 # 密码
+    publisher-confirm-type: correlated  # 启用发布确认机制 (none:关闭confirm机制，simple同步阻塞等待MQ的回执消息，correlated：MQ异步回调方式返回 回执消息)correlated：MQ异步回调方式返回 回执消息)
+    publisher-returns: true             # 启用消息返回机制
+    listener:
+      simple:
+        prefetch: 1
+        acknowledge-mode: auto
+        retry:
+          enabled: true
+          initial-interval: 300ms
+          multiplier: 1.2
+          max-attempts: 3
+          stateless: true
+
   profiles:
     active: dev
   jackson:
@@ -22,8 +41,6 @@ springdoc:
       packages-to-scan:
         # 配置接口文档扫描包路径，每个服务的路径不同，下面是系统服务(youlai-system)的包路径
         - com.syy.dpms.controller
-
-# knife4j的增强配置，不需要增强可以不配
 knife4j:
   enable: false
   setting:

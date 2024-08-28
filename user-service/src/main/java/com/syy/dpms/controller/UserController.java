@@ -1,8 +1,7 @@
 package com.syy.dpms.controller;
 
 
-import cn.hutool.core.bean.BeanUtil;
-import com.syy.dpms.UserHolder;
+import com.syy.dpms.utils.UserHolder;
 import com.syy.dpms.dto.LoginFormDTO;
 import com.syy.dpms.dto.Result;
 import com.syy.dpms.dto.UserDTO;
@@ -14,8 +13,6 @@ import jakarta.annotation.Resource;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpRequest;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -126,5 +123,10 @@ public class UserController {
     @PostMapping("/getByIds")
     public Result getUsersByIds(@RequestBody List<Long> ids) {
         return userService.getUsersByIds(ids);
+    }
+
+    @GetMapping("/getOneError")
+    private Result getOneError(){
+        throw new RuntimeException("故意的");
     }
 }

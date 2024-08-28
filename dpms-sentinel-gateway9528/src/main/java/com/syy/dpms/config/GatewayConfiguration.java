@@ -23,56 +23,83 @@ import org.springframework.web.reactive.result.view.ViewResolver;
 import javax.annotation.PostConstruct;
 import java.util.*;
 
+/**
+ * 配置类用于设置 Spring Cloud Gateway 的限流和服务降级功能
+ */
 @Configuration
 public class GatewayConfiguration {
 
     private final List<ViewResolver> viewResolvers;
     private final ServerCodecConfigurer serverCodecConfigurer;
 
+    /**
+     * 构造函数，注入 ViewResolver 和 ServerCodecConfigurer
+     *
+     * @param viewResolversProvider 提供视图解析器的对象
+     * @param serverCodecConfigurer 编解码配置器
+     */
     public GatewayConfiguration(ObjectProvider<List<ViewResolver>> viewResolversProvider, ServerCodecConfigurer serverCodecConfigurer) {
         this.viewResolvers = viewResolversProvider.getIfAvailable(Collections::emptyList);
         this.serverCodecConfigurer = serverCodecConfigurer;
     }
 
+    /**
+     * 注册 Sentinel 的限流异常处理器，用于处理限流后的异常情况
+     *
+     * @return SentinelGatewayBlockExceptionHandler 实例
+     */
     @Bean
     @Order(Ordered.HIGHEST_PRECEDENCE)
     public SentinelGatewayBlockExceptionHandler sentinelGatewayBlockExceptionHandler() {
-        // Register the block exception handler for Spring Cloud Gateway.
         return new SentinelGatewayBlockExceptionHandler(viewResolvers, serverCodecConfigurer);
     }
 
+    /**
+     * 注册 Sentinel 的限流过滤器，进行限流控制
+     *
+     * @return SentinelGatewayFilter 实例
+     */
     @Bean
     @Order(-1)
     public GlobalFilter sentinelGatewayFilter() {
         return new SentinelGatewayFilter();
     }
 
+    /**
+     * 初始化限流规则和限流处理器
+     */
     @PostConstruct
     public void doInit() {
-        initRules();
-        initBlockHandler();
+        initRules(); // 初始化限流规则
+        initBlockHandler(); // 初始化限流处理器
     }
 
-    // 初始化限流规则
+    /**
+     * 初始化限流规则
+     * 这里可以添加更多的限流规则来限制请求速率
+     */
     private void initRules() {
         Set<GatewayFlowRule> rules = new HashSet<>();
-        // 添加限流规则
+        // 示例规则：对名为 "blog_like" 的路由设置每秒允许 1 次请求
         rules.add(new GatewayFlowRule("blog_like").setCount(1).setIntervalSec(1));
-        // 可以在这里添加更多规则
+        // 可以在这里添加更多的规则
         GatewayRuleManager.loadRules(rules);
     }
 
-    // 初始化限流处理器
+    /**
+     * 初始化限流处理器
+     * 定义当请求被限流时返回的统一响应
+     */
     private void initBlockHandler() {
         BlockRequestHandler handler = (exchange, t) -> {
             // 返回全局统一的限流响应
             return ServerResponse.status(HttpStatus.TOO_MANY_REQUESTS)
                     .contentType(MediaType.APPLICATION_JSON)
                     .body(BodyInserters.fromValue(Result.builder()
-//                            .data(Collections.singletonMap("success", false))
+                            // 设置失败标识和友好的错误消息
                             .data(null)
                             .success(false)
-                            .errorMsg("请求太过频繁，系统忙不过来，触发限流(sentinel+gateway整合Case)")
+                            .errorMsg("请求太过频繁，请休息一会~") // 用户友好的错误消息
                             .total(null)
                             .build()));
         };

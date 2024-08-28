@@ -82,7 +82,7 @@
         </dependency>
         <dependency>
             <groupId>com.syy.dpms</groupId>
-            <artifactId>dp-utils</artifactId>
+            <artifactId>dp-common</artifactId>
             <version>1.0-SNAPSHOT</version>
             <exclusions>
                 <exclusion>

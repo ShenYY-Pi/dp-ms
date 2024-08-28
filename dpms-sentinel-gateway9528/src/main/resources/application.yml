@@ -71,7 +71,6 @@ logging:
   level:
     com.syy.dpms: debug
 
-
 knife4j:
   gateway:
     # 开启网关聚合文档

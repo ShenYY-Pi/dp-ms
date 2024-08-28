@@ -10,12 +10,13 @@
     <packaging>pom</packaging>
     <modules>
         <module>user-service</module>
-        <module>dp-utils</module>
+        <module>dp-common</module>
         <module>shop-service</module>
         <module>voucher-service</module>
         <module>social-service</module>
         <module>dpms-sentinel-gateway9528</module>
         <module>upload-service</module>
+        <module>dp-api</module>
     </modules>
 
     <properties>
@@ -35,17 +36,24 @@
         <spring.cloud.version>2022.0.4</spring.cloud.version>
         <spring.cloud.alibaba.version>2022.0.0.0-RC2</spring.cloud.alibaba.version>
         <redisson.version>3.13.6</redisson.version>
+        <amqp.version>3.1.7</amqp.version>
     </properties>
 
     <dependencyManagement>
         <dependencies>
-            <!--springboot 3.2.0-->
+            <!--springboot 3.1.7-->
             <dependency>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-starter-parent</artifactId>
                 <version>${spring.boot.version}</version>
                 <type>pom</type>
                 <scope>import</scope>
+            </dependency>
+            <!--Spring AMQP-->
+            <dependency>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-starter-amqp</artifactId>
+                <version>${amqp.version}</version>
             </dependency>
             <dependency>
                 <groupId>org.springframework.boot</groupId>
