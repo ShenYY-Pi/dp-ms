@@ -15,5 +15,5 @@
 
 需要配置Nacos、Sentinel、RabbitMQ
 
-Sentinel需要运行到8888端口   ```java -jar -Dserver.port=8888 ${你的jar文件}```
+Sentinel需要运行到8888端口   ```cmd java -jar -Dserver.port=8888 ${你的jar文件}```
 
